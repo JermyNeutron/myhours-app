@@ -1,5 +1,5 @@
 # Authenticate
-## retrieve 
+## retrieve bearer token
 
 import configparser
 import json
@@ -9,8 +9,8 @@ import time
 # check config population
 def config_check():
     
-    # start clock
-    time_start = time.time()
+    # # start clock
+    # time_start = time.time()
 
     config = configparser.ConfigParser()
     config.read('test_config.ini')
@@ -26,7 +26,7 @@ def config_check():
             print("Oops! Open config.ini and provide an email.", end=' ')
             missing_authentication += 1
         else:
-            print(f"Email is {ini_email}", end=' ') # OPTIONAL
+            # print(f"Email is {ini_email}", end=' ') # OPTIONAL
             email_populated = ini_email
     else:
         print('The email key is missing!')
@@ -39,15 +39,15 @@ def config_check():
             print("Oops! Open config.ini and provide a password.")
             missing_authentication += 1
         else:
-            print(f"Password is stored.") # OPTIONAL
+            # print(f"Password is stored.") # OPTIONAL
             password_provided = ini_password
     else:
         print('The password key is missing!')
         missing_authentication += 1
 
-    # end clock
-    time_end = time.time()
-    print(f'{time_end - time_start}s elapsed')
+    # # end clock
+    # time_end = time.time()
+    # print(f'{time_end - time_start}s elapsed')
 
     # exit function
     if missing_authentication > 0:
@@ -80,7 +80,15 @@ def mh_login(email, password):
 
 # testing purposes
 if __name__ == '__main__':
+    # start time # optional
+    time_start = time.time()
+
+    # check and retrieve config population
     email, password = config_check()
     if not missing_authentication:
+        # user authentication and bearer token retrieval
         mh_login(email, password)
-    
+
+    # end clock # optional
+    time_end = time.time()
+    print(f'{time_end - time_start}s elapsed')
