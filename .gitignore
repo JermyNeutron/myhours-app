@@ -1,0 +1,5 @@
+venv/
+scratch/
+
+test_config.ini
+working_scratch1.py
