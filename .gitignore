@@ -1,5 +1,8 @@
-venv/
 scratch/
+venv/
 
 test_config.ini
+working_authentication.py
 working_scratch1.py
+credentials.txt
+test_credentials.txt
