@@ -46,7 +46,7 @@ def config_check():
         print("The password key is missing!")
         missing_authentication += 1
 
-    # # end clock
+    # # end clock # OPTIONAL
     # time_end = time.time()
     # print(f'{time_end - time_start}s elapsed')
 
@@ -95,9 +95,13 @@ def writing_response(
 # check credentials file # OPTIONAL
 def checking_response(credentials_file):
     with open(credentials_file, "r") as file:
+        json_data = file.read()
         print(
-            f"This is read from the .txt file:\n{file.read()}\nCredentials successfully retrieved."
+            f"This is read from the .txt file:\n{json_data}\nCredentials successfully retrieved."
         )  # OPTIONAL
+    # verify dictionary key # OPTIONAL
+    credentials = json.loads(json_data)
+    print(f'i found this key: {credentials["accessToken"]}')
 
 
 # testing purposes
