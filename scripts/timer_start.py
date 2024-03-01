@@ -1,9 +1,15 @@
-import json
-import requests
-import time
-import pytz
 from datetime import datetime
-from src.timer_class import MyHour_Session_Current
+import json
+import sys
+import time
+
+import pytz
+import requests
+
+sys.path.append('.')
+
+from src.timer_class import sessionCurrent
+
 
 # retrieve current local time in ISO 8601 format
 def timestamp():
@@ -54,7 +60,7 @@ def timer_start():
 
     # convert request into type(dict)
     response = pre_response.json()
-    cl_response = MyHour_Session_Current(response)
+    cl_response = sessionCurrent(response)
 
     print(cl_response) # OPTIONAL
 

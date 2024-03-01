@@ -3,8 +3,9 @@
 
 import configparser
 import json
-import requests
 import time
+
+import requests
 
 
 # check config population

@@ -1,4 +1,4 @@
-class MyHour_Session_Current:
+class sessionCurrent:
     def __init__(self, json_data=None) -> None:
         if json_data is None:
             json_data = {}
@@ -11,5 +11,5 @@ class MyHour_Session_Current:
         return f"log_id = {self.log_id},\ntask_name = {self.task_name},\nproject_name = {self.project_name},\nnote = {self.note},"
 
 if __name__ == '__main__':
-    myinstance = MyHour_Session_Current()
+    myinstance = sessionCurrent()
     print(myinstance)
