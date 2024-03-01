@@ -1,9 +1,10 @@
 scratch/
 venv/
+__pycache__/
 
-myhours.code-workspace
-test_config.ini
 working_authentication.py
 working_scratch1.py
-credentials.txt
+test_config.ini
 test_credentials.txt
+test_log_current.txt
+myhours-app.code-workspace

@@ -14,7 +14,7 @@ def config_check():
     # time_start = time.time()
 
     config = configparser.ConfigParser()
-    config.read("test_config.ini")
+    config.read("config/test_config.ini")
     # LIVE: config.ini
 
     global missing_authentication
@@ -85,15 +85,13 @@ def mh_login(email, password):
 
 
 # overwriting credentials file
-def writing_response(
-    response, credentials_file="test_credentials.txt"
-):  # LIVE: credentials.txt
+def writing_response(response, credentials_file="temp/test_credentials.txt"):  # LIVE: credentials.txt
     with open(credentials_file, "w") as file:
         json.dump(response, file)
 
 
 # check credentials file # OPTIONAL
-def checking_response(credentials_file):
+def checking_response(credentials_file="temp/test_credentials.txt"):
     with open(credentials_file, "r") as file:
         json_data = file.read()
         print(
@@ -118,7 +116,7 @@ if __name__ == "__main__":
             print("Program has exited.")
         else:
             writing_response(response)
-            checking_response("test_credentials.txt")  # OPTIONAL
+            checking_response()  # OPTIONAL
 
     # end clock # optional
     time_end = time.time()

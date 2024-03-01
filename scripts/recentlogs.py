@@ -1,7 +1,9 @@
 import requests
 import json
+from timer_class import MyHour_Session_Current
 
-url = "https://api2.myhours.com/api/Logs?date=2024-02-25&step=100"
+
+url = "https://api2.myhours.com/api/Logs?date=2024-02-28&step=100"
 
 
 with open("test_credentials.txt", "r") as file:
@@ -23,7 +25,4 @@ response = requests.request("GET", url, headers=headers, data=payload)
 
 # print(type(response.json())) # list
 for dictionary in response.json():
-    for key, value in dictionary.items():
-        print(f"{key}: {value}")
-
-    print()
+    print(MyHour_Session_Current(dictionary))
