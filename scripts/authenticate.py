@@ -112,12 +112,16 @@ if __name__ == "__main__":
     email, password = config_check()
     if not missing_authentication:
         # user authentication and bearer token retrieval
-        response = mh_login(email, password)
-        if response is None:
-            print("Program has exited.")
-        else:
-            writing_response(response)
-            checking_response()  # OPTIONAL
+        try:
+            response = mh_login(email, password)
+            if response is None:
+                print("Program has exited.")
+                print('Internet connection failed. Try again once connected.')
+            else:
+                writing_response(response)
+                checking_response()  # OPTIONAL
+        except requests.exceptions.ConnectionError as e:
+            print(f'\nERROR: Internet connection failed. Try again once connected.\n')
 
     # end clock # optional
     time_end = time.time()
