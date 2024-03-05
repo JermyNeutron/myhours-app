@@ -41,9 +41,11 @@ def main():
         "Authorization": f"Bearer {credentials['accessToken']}",
     }
 
-    response = requests.request("POST", url, headers=headers, data=payload)
+    pre_response = requests.request("POST", url, headers=headers, data=payload)
+    response = pre_response.json()
+    cl_response = sessionCurrent(response)
 
-    print(response.text)
+    print(cl_response)
 
 if __name__ == '__main__':
     main()
