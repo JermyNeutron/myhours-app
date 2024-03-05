@@ -73,12 +73,15 @@ def timer_start():
 
 if __name__ == '__main__':
 
+    # OPTIONAL START duration timer
     time_clock_start = time.time()
+    # main func
     current_time = timer_start()
     
+    # OPTIONAL STOP duration timer
     time_clock_stop = time.time()
     clock_duration = time_clock_stop - time_clock_start
-    # convert iso to military HHMM
+    # OPTIONAL convert iso to military HHMM
     dt_obj = datetime.fromisoformat(current_time[:-1])
     hour = dt_obj.hour
     minute = dt_obj.minute
