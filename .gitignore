@@ -5,6 +5,7 @@ venv/
 test_config.ini
 test_credentials.txt
 test_log_current.txt
+test_projects.txt
 working_authentication.py
 working_scratch1.py
 myhours-app.code-workspace
