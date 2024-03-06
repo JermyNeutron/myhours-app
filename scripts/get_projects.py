@@ -24,22 +24,33 @@ def main():
 
   response = requests.request("GET", url, headers=headers, data=payload).json()
 
+  with open("temp/test_projects.txt", 'w') as file:
+    #  LIVE: temp/projects.txt
+     json.dump(response, file)
+     print('writing complete')
+
   return response
 
-def test():
-   response = main()
-   for proj in response:
-      print(userProjects(proj))
-
+# prints project names only
 def display_list():
-  response = main()
+  with open("temp/test_projects.txt", "r") as file:
+     pre_response = file.read()
+     response = json.loads(pre_response)
   # sort response based on key and case-insensitive ASCII
   sorted_resp = sorted(response, key= lambda x: x['name'].lower())
 
 # print "name" key
   for proj in sorted_resp:
-     print(userProjects(proj).project_name)
+     print(userProjects(proj).name)
 
+# updates projects.txt and reads user projects
 if __name__ == '__main__':
-    main()
-    test()
+  main()
+  with open("temp/test_projects.txt", "r") as file:
+    pre_response = file.read()
+    response = json.loads(pre_response)
+    # print(response)
+    for proj in response:
+        print(userProjects(proj))
+  
+  # display_list()
