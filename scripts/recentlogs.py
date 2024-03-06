@@ -18,7 +18,7 @@ def timestamp():
     current_time_iso = current_time_iso[:10]
     return current_time_iso
 
-def requestlog():
+def requestlog(url):
     with open("temp/test_credentials.txt", "r") as file:
         # LIVE: temp/credentials.txt
         json_data = file.read()
@@ -37,10 +37,11 @@ def requestlog():
     for dictionary in response.json():
         print(f"\n{sessionCurrent(dictionary)}\n")
 
-if __name__ == '__main__':
+def main():
     current_date = timestamp()
-
     url = f"https://api2.myhours.com/api/Logs?date={current_date}&step=100"
-    # print(url) # testing
+    requestlog(url)
 
-    requestlog()
+
+if __name__ == '__main__':
+    main()
