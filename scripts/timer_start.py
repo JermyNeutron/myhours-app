@@ -31,7 +31,7 @@ def readfile():
     return accessed_credentials
 
 # POST timer START
-def timer_start():
+def timer_start(projectId = None, taskId = None):
     current_time = timestamp()
     credentials = readfile()
 
@@ -39,8 +39,8 @@ def timer_start():
 
     payload = json.dumps(
         {
-            "projectId": None,
-            "taskId": None,
+            "projectId": projectId,
+            "taskId": taskId,
             "note": "Started via API",
             "date": f"{current_time}",
             "start": f"{current_time}",
@@ -61,6 +61,7 @@ def timer_start():
     # convert request into type(dict)
     response = pre_response.json()
     cl_response = sessionCurrent(response)
+    # print(response)
 
     print(cl_response) # OPTIONAL
 
@@ -72,7 +73,6 @@ def timer_start():
     return current_time
 
 if __name__ == '__main__':
-
     # OPTIONAL START duration timer
     time_clock_start = time.time()
     # main func
