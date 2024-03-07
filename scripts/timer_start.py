@@ -21,19 +21,27 @@ def timestamp():
     return current_time_iso
 
 # ACCESS user credentials
-def readfile():
+def r_credentials():
     filename = "temp/test_credentials.txt"
     # LIVE: credentials.txt
     with open(filename, "r") as file:
         json_data = file.read()
     accessed_credentials = json.loads(json_data)
-    # print(f"readfile() return: {accessed_credentials}") # OPTIONAL
+    # print(f"r_credentials() return: {accessed_credentials}") # OPTIONAL
     return accessed_credentials
 
+def r_projects():
+    filename = "temp/test_projects.txt"
+    # LIVE: temp/projects.txt
+    with open(filename, "r") as file:
+        json_data = file.read()
+    accessed_projects = json.loads(json_data)
+    return accessed_projects
+
 # POST timer START
-def timer_start(projectId = None, taskId = None):
+def main(projectId = None, taskId = None):
     current_time = timestamp()
-    credentials = readfile()
+    credentials = r_credentials()
 
     url = "https://api2.myhours.com/api/Logs/startNewLog"
 
@@ -76,7 +84,7 @@ if __name__ == '__main__':
     # OPTIONAL START duration timer
     time_clock_start = time.time()
     # main func
-    current_time = timer_start()
+    current_time = main()
     
     # OPTIONAL STOP duration timer
     time_clock_stop = time.time()

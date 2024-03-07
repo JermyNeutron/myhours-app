@@ -40,17 +40,21 @@ def display_list():
   sorted_resp = sorted(response, key= lambda x: x['name'].lower())
 
   # print "name" key
+  print("Your current projects include:\n")
   for proj in sorted_resp:
      print(userProjects(proj).name, end=', ')
+  print('')
+
+  return sorted_resp
 
 # updates projects.txt and reads user projects
 if __name__ == '__main__':
   main()
-  with open("temp/test_projects.txt", "r") as file:
-    pre_response = file.read()
-    response = json.loads(pre_response)
-    # print(response)
-    for proj in response:
-        print(userProjects(proj))
+  # with open("temp/test_projects.txt", "r") as file:
+  #   pre_response = file.read()
+  #   response = json.loads(pre_response)
+  #   # print(response)
+  #   for proj in response:
+  #       print(userProjects(proj))
   
-  # display_list()
+  display_list()
