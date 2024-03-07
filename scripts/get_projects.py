@@ -27,7 +27,7 @@ def main():
   with open("temp/test_projects.txt", 'w') as file:
     #  LIVE: temp/projects.txt
      json.dump(response, file)
-     print('writing complete')
+    #  print('writing complete') # OPTIONAL
 
   return response
 
@@ -39,9 +39,9 @@ def display_list():
   # sort response based on key and case-insensitive ASCII
   sorted_resp = sorted(response, key= lambda x: x['name'].lower())
 
-# print "name" key
+  # print "name" key
   for proj in sorted_resp:
-     print(userProjects(proj).name)
+     print(userProjects(proj).name, end=', ')
 
 # updates projects.txt and reads user projects
 if __name__ == '__main__':
