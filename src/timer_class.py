@@ -8,7 +8,7 @@ class sessionCurrent:
         self.log_id = json_data.get("id", None)
 
     def __str__(self) -> str:
-        return f"log_id = {self.log_id},\nproject_name = {self.project_name},\ntask_name = {self.task_name},\nnote = {self.note},\n"
+        return f"log_id = {self.log_id},\nproject_name = {self.project_name},\ntask_name = {self.task_name},\nnote = {self.note.strip()}\n"
 
 class userProjects:
     def __init__(self, json_data = None) -> None:
@@ -44,7 +44,53 @@ class userProjects:
     def __str__(self) -> str:
         return f"name = {self.name},\ntime logged = {self.totalTimeLogged},\nid = {self.id}\n"
 
+    def __repr__(self) -> str:
+        return 
+
+class userLogs:
+    def __init__(self, json_data=None) -> None:
+        if json_data == None:
+            json_data = {}
+        self.note = json_data.get("note", None)
+        self.date = json_data.get("date", None)
+        self.duration = json_data.get("duration", None)
+        self.projectName = json_data.get("projectName", None)
+        self.taskName = json_data.get("taskName", None)
+        self.clientName = json_data.get("clientName", None)
+        self.projectInvoiceMethod = json_data.get("projectInvoiceMethod", None)
+        self.projectArchived = json_data.get("projectArchived", None)
+        self.taskArchived = json_data.get("taskArchived", None)
+        self.customField1 = json_data.get("customField1", None)
+        self.customField2 = json_data.get("customField2", None)
+        self.customField3 = json_data.get("customField3", None)
+        self.running = json_data.get("running", None)
+        self.startTime = json_data.get("startTime", None)
+        self.endTime = json_data.get("endTime", None)
+        self.times = json_data.get("times", None)
+        self.status = json_data.get("status", None)
+        self.invoiceId = json_data.get("invoiceId", None)
+        self.projectId = json_data.get("projectId", None)
+        self.taskId = json_data.get("taskId", None)
+        self.billable = json_data.get("billable", None)
+        self.inLockedPeriod = json_data.get("inLockedPeriod", None)
+        self.expense = json_data.get("expense", None)
+        self.userId = json_data.get("userId", None)
+        self.amount = json_data.get("amount", None)
+        self.rate = json_data.get("rate", None)
+        self.laborCost = json_data.get("laborCost", None)
+        self.laborRate = json_data.get("laborRate", None)
+        self.billableDuration = json_data.get("billableDuration", None)
+        self.billableHours = json_data.get("billableHours", None)
+        self.laborHours = json_data.get("laborHours", None)
+        self.tags = json_data.get("tags", None)
+        self.attachments = json_data.get("attachments", None)
+        self.billableAmount = json_data.get("billableAmount", None)
+        self.id = json_data.get("id", None)
+        self.data = json_data
+
+    def __repr__(self) -> str:
+        return f"{self.data}"
 
 if __name__ == '__main__':
-    dothething = userProjects()
-    print(dothething)
+    dothething = userLogs()
+    print(repr(dothething))
