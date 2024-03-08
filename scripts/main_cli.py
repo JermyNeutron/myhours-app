@@ -5,7 +5,13 @@ import time
 
 sys.path.append('.')
 
-import authenticate, get_projects, timer_start, timer_stop, recentlogs
+from src.timelap import timelap
+
+import authenticate
+import get_projects
+import timer_start
+import timer_stop
+import recentlogs
 
 
 def clear_screen():
@@ -14,10 +20,16 @@ def clear_screen():
     else:
         _ = os.system('cls')
 
-
-def log_check():
-    pass
-
+# @timelap
+def log_check(test=False):
+    log = recentlogs.requestlog(test)
+    status = False
+    for log_entry in log:
+        if log_entry.get("running", False):
+            active_timer = log_entry
+            status = True
+    return status
+    
 
 def timer_statement(status):
     if status is False:
@@ -47,16 +59,14 @@ def timer_start_options():
                 print("Invalid selection.")
         return projectId
 
-
 def main_screen(test=False):
     get_projects.main(test)
     # initialize timer status
-    timer_status = False
+    timer_status = log_check(test)
     while True:
-        statement = timer_statement(timer_status)
         clear_screen()
         print(f"""MyHours App
-{statement}
+{timer_statement(log_check(test))}
 
 Type an option:
 1) Start Timer,
