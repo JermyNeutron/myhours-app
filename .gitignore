@@ -2,6 +2,7 @@ __pycache__/
 scratch/
 venv/
 
+.DS_Store
 test_config.ini
 test_credentials.txt
 test_log_current.txt
