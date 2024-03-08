@@ -9,6 +9,7 @@ sys.path.append('.')
 
 from src.timer_class import sessionCurrent
 
+
 def timestamp():
     current_time_utc = datetime.utcnow().replace(tzinfo=pytz.utc)
     pst = pytz.timezone('America/Los_Angeles')
@@ -18,9 +19,11 @@ def timestamp():
     current_time_iso = current_time_iso[:10]
     return current_time_iso
 
-def requestlog(url):
-    with open("temp/test_credentials.txt", "r") as file:
-        # LIVE: temp/credentials.txt
+
+def requestlog(url, test=False):
+    # Paths
+    credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
+    with open(credentials_path, "r") as file:
         json_data = file.read()
     mydictionary = json.loads(json_data)
 
@@ -37,11 +40,12 @@ def requestlog(url):
     for dictionary in response.json():
         print(f"\n{sessionCurrent(dictionary)}\n")
 
-def main():
+
+def main(test=False):
     current_date = timestamp()
     url = f"https://api2.myhours.com/api/Logs?date={current_date}&step=100"
-    requestlog(url)
+    requestlog(url, test)
 
 
 if __name__ == '__main__':
-    main()
+    main(test=True)
