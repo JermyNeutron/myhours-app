@@ -1,7 +1,7 @@
-from datetime import datetime
 import json
 import sys
 import time
+from datetime import datetime
 
 import pytz
 import requests
@@ -20,28 +20,36 @@ def timestamp():
     # print(f"timestamp func returns: {current_time_iso}") # OPTIONAL
     return current_time_iso
 
+
 # ACCESS user credentials
-def r_credentials():
-    filename = "temp/test_credentials.txt"
-    # LIVE: credentials.txt
-    with open(filename, "r") as file:
+def r_credentials(test=False):
+    # Paths
+    credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
+
+    with open(credentials_path, "r") as file:
         json_data = file.read()
     accessed_credentials = json.loads(json_data)
     # print(f"r_credentials() return: {accessed_credentials}") # OPTIONAL
     return accessed_credentials
 
-def r_projects():
-    filename = "temp/test_projects.txt"
-    # LIVE: temp/projects.txt
-    with open(filename, "r") as file:
+
+def r_projects(test=False):
+    # Paths
+    project_path = "temp/projects.txt" if not test else "temp/test_projects.txt"
+
+    with open(project_path, "r") as file:
         json_data = file.read()
     accessed_projects = json.loads(json_data)
     return accessed_projects
 
+
 # POST timer START
-def main(projectId = None, taskId = None):
+def main(test=False, projectId=None, taskId=None):
+    # Paths
+    log_path = "temp/log_current.txt" if not test else "temp/test_log_current.txt"
+
     current_time = timestamp()
-    credentials = r_credentials()
+    credentials = r_credentials(test)
 
     url = "https://api2.myhours.com/api/Logs/startNewLog"
 
@@ -74,17 +82,19 @@ def main(projectId = None, taskId = None):
     print(cl_response) # OPTIONAL
 
     # UPDATE file path
-    with open('temp/test_log_current.txt', 'w') as file:
+    with open(log_path, 'w') as file:
         js_response = json.dumps(response)
         file.write(js_response)
 
     return current_time
 
+
 if __name__ == '__main__':
     # OPTIONAL START duration timer
     time_clock_start = time.time()
+
     # main func
-    current_time = main()
+    current_time = main(test=True)
     
     # OPTIONAL STOP duration timer
     time_clock_stop = time.time()

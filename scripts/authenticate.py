@@ -9,14 +9,15 @@ import requests
 
 
 # check config population
-def config_check():
-
+def config_check(test=False):
     # # start clock
     # time_start = time.time()
 
+    # Paths
+    config_path = "config/config.ini" if not test else "config/test_config.ini"
+
     config = configparser.ConfigParser()
-    config.read("config/test_config.ini")
-    # LIVE: config.ini
+    config.read(config_path)
 
     global missing_authentication
     missing_authentication = 0
@@ -86,14 +87,20 @@ def mh_login(email, password):
 
 
 # overwriting credentials file
-def writing_response(response, credentials_file="temp/test_credentials.txt"):  # LIVE: credentials.txt
-    with open(credentials_file, "w") as file:
+def writing_response(response, test=False):
+    # Paths
+    credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
+
+    with open(credentials_path, "w") as file:
         json.dump(response, file)
 
 
 # check credentials file # OPTIONAL
-def checking_response(credentials_file="temp/test_credentials.txt"):
-    with open(credentials_file, "r") as file:
+def checking_response(test=False):
+    # Paths
+    credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
+    
+    with open(credentials_path, "r") as file:
         json_data = file.read()
         print(
             f"This is read from the .txt file:\n{json_data}\nCredentials successfully retrieved."
@@ -109,7 +116,7 @@ if __name__ == "__main__":
     time_start = time.time()
 
     # check and retrieve config population
-    email, password = config_check()
+    email, password = config_check(test=True)
     if not missing_authentication:
         # user authentication and bearer token retrieval
         try:
@@ -118,8 +125,8 @@ if __name__ == "__main__":
                 print("Program has exited.")
                 print('Internet connection failed. Try again once connected.')
             else:
-                writing_response(response)
-                checking_response()  # OPTIONAL
+                writing_response(response, test=True)
+                checking_response(test=True)  # OPTIONAL
         except requests.exceptions.ConnectionError as e:
             print(f'\nERROR: Internet connection failed. Try again once connected.\n')
 

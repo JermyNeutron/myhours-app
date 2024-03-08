@@ -1,6 +1,6 @@
-from datetime import datetime
 import json
 import sys
+from datetime import datetime
 
 import pytz
 import requests
@@ -19,17 +19,19 @@ def timestamp():
     print(current_time_iso) # optional
     return current_time_iso
 
-def main():
+
+def main(test=False):
+    # Paths
+    credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
+    log_path = "temp/log_current.txt" if not test else "temp/test_log_current.txt"
+
     current_time = timestamp()
 
-    user_credfile = "temp/test_credentials.txt"
-    # LIVE: credentials.txt
-    with open(user_credfile, "r") as user_cred:
+    with open(credentials_path, "r") as user_cred:
         json_data = user_cred.read()
     credentials = json.loads(json_data)
 
-    current_session_info_text = "temp/test_log_current.txt"
-    with open(current_session_info_text, 'r') as session_info:
+    with open(log_path, 'r') as session_info:
         json_info = session_info.read()
     current_log = sessionCurrent(json.loads(json_info))
 
@@ -47,5 +49,6 @@ def main():
 
     print(cl_response)
 
+
 if __name__ == '__main__':
-    main()
+    main(test=True)
