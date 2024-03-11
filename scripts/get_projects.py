@@ -31,7 +31,8 @@ def rtrvproj(test=False):
 
 	with open(project_path, 'w') as file:
 		json.dump(response, file)
-	#  print('writing complete') # OPTIONAL
+	if test:
+		print('writing complete') # OPTIONAL
 
 	return response
 

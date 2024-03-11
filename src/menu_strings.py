@@ -19,5 +19,6 @@ Test) Clean Exit
 Q) Save and Close"""
     return menu_live if not test else menu_testing
 
+
 if __name__ == '__main__':
     print(main("",test=True))
