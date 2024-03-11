@@ -7,8 +7,9 @@ sys.path.append('.')
 
 from src.timer_class import userProjects
 
+import authenticate
 
-def main(test=False):
+def rtrvproj(test=False):
   # Paths
   credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
   project_path = "temp/projects.txt" if not test else "temp/test_projects.txt"
@@ -54,14 +55,44 @@ def display_list(test=False):
   return sorted_resp
 # updates projects.txt and reads user projects
 
+def main(test=False):
+  maxatmp = 3
+  exatmp = 0
+  while exatmp < maxatmp:
+    try:
+      rtrvproj(test)
+      break
+    except json.decoder.JSONDecodeError as e:
+      authenticate.main(test)
+      exatmp += 1
+    except Exception as e:
+      print(f"An error occurred while retrieving projects: {e}")
+      break
+    except:
+      rtrvproj(test)
+      exatmp += 1
+  else:
+    print('Max attempts reached while retrieving projects.')
 
 if __name__ == '__main__':
-  main(test=True)
-  # with open("temp/test_projects.txt", "r") as file:
-  #   pre_response = file.read()
-  #   response = json.loads(pre_response)
-  #   # print(response)
-  #   for proj in response:
-  #       print(userProjects(proj))
-  
-  display_list(test=True)
+  test = True
+  maxatmp = 3
+  exatmp = 0
+  while exatmp < maxatmp:
+    try:
+      rtrvproj(test)
+      display_list(test)
+      exatmp += 1
+      break
+    except json.decoder.JSONDecodeError as e:
+      authenticate.main(test)
+      exatmp += 1
+    except Exception as e:
+      print(f"An error occurred while retrieving projects: {e}")
+      break
+    except:
+      rtrvproj(test)
+      exatmp += 1
+  else:
+    print('Max attempts reached while retrieving projects.')
+  print(f"{exatmp} of {maxatmp} attempts used.")
