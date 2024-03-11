@@ -110,13 +110,9 @@ def checking_response(test=False):
     print(f'i found this key: {credentials["accessToken"]}')
 
 
-# testing purposes
-if __name__ == "__main__":
-    # start time # optional
-    time_start = time.time()
-
+def main(test=False):
     # check and retrieve config population
-    email, password = config_check(test=True)
+    email, password = config_check(test)
     if not missing_authentication:
         # user authentication and bearer token retrieval
         try:
@@ -125,11 +121,17 @@ if __name__ == "__main__":
                 print("Program has exited.")
                 print('Internet connection failed. Try again once connected.')
             else:
-                writing_response(response, test=True)
-                checking_response(test=True)  # OPTIONAL
+                writing_response(response, test)
+                checking_response(test)  # OPTIONAL
         except requests.exceptions.ConnectionError as e:
             print(f'\nERROR: Internet connection failed. Try again once connected.\n')
 
+
+# testing purposes
+if __name__ == "__main__":
+    # start time # optional
+    time_start = time.time()
+    main(test=True)
     # end clock # optional
     time_end = time.time()
     print(f"{time_end - time_start}s elapsed")
