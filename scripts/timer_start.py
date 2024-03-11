@@ -1,7 +1,7 @@
+from datetime import datetime
 import json
 import sys
 import time
-from datetime import datetime
 
 import pytz
 import requests

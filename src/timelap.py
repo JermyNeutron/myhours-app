@@ -1,5 +1,6 @@
 import time
 
+
 def timelap(func):
     def wrapper(*args, **kwargs):
         time_start = time.time()

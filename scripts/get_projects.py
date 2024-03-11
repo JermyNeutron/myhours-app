@@ -9,6 +9,7 @@ from src.timer_class import userProjects
 
 import authenticate
 
+
 def rtrvproj(test=False):
 	# Paths
 	credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
@@ -55,6 +56,7 @@ def display_list(test=False):
 	return sorted_resp
 	# updates projects.txt and reads user projects
 
+
 def main(test=False):
 	maxatmp = 3
 	exatmp = 0
@@ -71,6 +73,7 @@ def main(test=False):
 			break
 	else:
 		print('Max attempts reached while retrieving projects.')
+
 
 if __name__ == '__main__':
 	main(test=True)

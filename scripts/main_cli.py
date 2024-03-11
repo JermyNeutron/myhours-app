@@ -21,6 +21,7 @@ def clear_screen():
     else:
         _ = os.system('cls')
 
+
 # @timelap
 def log_check(test=False):
     log = recentlogs.requestlog(test)
