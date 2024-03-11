@@ -6,6 +6,7 @@ import time
 sys.path.append('.')
 
 from src.timelap import timelap
+from src import menu_strings
 
 import authenticate
 import get_projects
@@ -60,34 +61,14 @@ def timer_start_options():
         return projectId
 
 
-def main_options(test=False):
-    options = f"""MyHours App
-{timer_statement(log_check(test))}
-
-Type an option:
-1) Start Timer
-2) Stop Timer
-
-Q) Save and Close
-""" if not test else f"""MyHours App
-{timer_statement(log_check(test))}
-
-Type an option:
-1) Start Timer
-2) Stop Timer
-
-Test) Clean Exit
-
-Q) Save and Close"""
-    return options
-
-
 def main_screen(test=False):
     get_projects.main(test)
     # initialize timer status
     while True:
         clear_screen()
-        print(main_options(test))
+        options = timer_statement(log_check(test))
+        print(menu_strings.main(options, test))
+        # print(main_options(test))
         usel = input(': ')
         if usel.lower() == 'q':
             if timer_status:
