@@ -10,8 +10,6 @@ import requests
 
 # check config population
 def config_check(test=False):
-    # # start clock
-    # time_start = time.time()
 
     # Paths
     config_path = "config/config.ini" if not test else "config/test_config.ini"
@@ -48,10 +46,6 @@ def config_check(test=False):
         print("The password key is missing!")
         missing_authentication += 1
 
-    # # end clock # OPTIONAL
-    # time_end = time.time()
-    # print(f'{time_end - time_start}s elapsed')
-
     # exit function
     if missing_authentication > 0:
         return print("Please resolve your config.ini")
@@ -81,8 +75,6 @@ def mh_login(email, password):
         print("Incorrect email or password. Review the config.ini")
         return None
     else:
-        # print(response)  # OPTIONAL
-        # print(type(response))  # OPTIONAL
         return response
 
 
@@ -102,10 +94,7 @@ def checking_response(test=False):
     
     with open(credentials_path, "r") as file:
         json_data = file.read()
-        print(
-            f"This is read from the .txt file:\n{json_data}\nCredentials successfully retrieved."
-        )  # OPTIONAL
-    # verify dictionary key # OPTIONAL
+    # verify dictionary key
     credentials = json.loads(json_data)
     print(f'i found this key: {credentials["accessToken"]}')
 
@@ -122,7 +111,8 @@ def main(test=False):
                 print('Internet connection failed. Try again once connected.')
             else:
                 writing_response(response, test)
-                checking_response(test)  # OPTIONAL
+                if test:
+                    checking_response(test)  # OPTIONAL
         except requests.exceptions.ConnectionError as e:
             print(f'\nERROR: Internet connection failed. Try again once connected.\n')
 

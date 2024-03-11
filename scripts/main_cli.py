@@ -62,6 +62,7 @@ def timer_start_options():
 
 
 def main_screen(test=False):
+    authenticate.main(test)
     get_projects.main(test)
     # initialize timer status
     while True:
