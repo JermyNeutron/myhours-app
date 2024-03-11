@@ -69,7 +69,6 @@ def main_screen(test=False):
         clear_screen()
         options = timer_statement(log_check(test))
         print(menu_strings.main(options, test))
-        # print(main_options(test))
         usel = input(': ')
         if usel.lower() == 'q':
             if timer_status:
