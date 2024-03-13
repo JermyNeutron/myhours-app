@@ -24,6 +24,7 @@ def main(test=False):
     # Paths
     credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
     log_path = "temp/log_current.txt" if not test else "temp/test_log_current.txt"
+    time_path = "temp/log_time.txt" if not test else "temp/test_log_time.txt"
 
     current_time = timestamp()
 
@@ -49,6 +50,11 @@ def main(test=False):
 
     print(cl_response)
 
+    with open(log_path, 'w') as file:
+        file.write("")
+
+    with open(time_path, 'w') as file:
+        file.write("")
 
 if __name__ == '__main__':
     main(test=True)
