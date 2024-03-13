@@ -88,6 +88,9 @@ class userLogs:
         self.id = json_data.get("id", None)
         self.data = json_data
 
+    def __str__(self) -> str:
+        return f"log_id = {self.id},\nactive: {self.running},\nproject_name = {self.projectName},\ntask_name = {self.taskName},\nnote = {self.note.strip()}\n"
+
     def __repr__(self) -> str:
         return f"{self.data}"
 
