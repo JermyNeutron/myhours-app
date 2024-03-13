@@ -47,14 +47,18 @@ def requestlog(test=False):
 	return response
 
 def main(test=False):
+	current_date = timestamp()
 	maxatmp = 3
 	exatmp = 0
 	while exatmp < maxatmp:
 		try:
 			response = requestlog(test)
-			for dictionary in response:
-				print(f"{userLogs(dictionary)}\n")
-			print()
+			if response == []:
+				return f'No logs recorded for {current_date}\n'
+			else:
+				for dictionary in response:
+					print(f"{repr(userLogs(dictionary))}\n")
+				print()
 			break
 		except json.decoder.JSONDecodeError as e:
 			authenticate.main(test)
@@ -68,4 +72,8 @@ def main(test=False):
 
 
 if __name__ == '__main__':
-     main(test=True)
+    #  main(test=True)
+	request = requestlog(test=True)
+	print(type(request))
+	print(f"request = {request}")
+	# print(timestamp())
