@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 import json
 import sys
@@ -16,8 +16,8 @@ def timestamp():
     pst = pytz.timezone('America/Los_Angeles')
     current_time_pst = current_time_utc.astimezone(pst)
     current_time_iso = current_time_pst.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + 'Z'
-    current_time_iso = current_time_iso[:10]
-    return current_time_iso
+    current_date = current_time_iso[:10]
+    return current_date, current_time_iso
 
 
 def requestlog(test=False):
@@ -25,7 +25,7 @@ def requestlog(test=False):
 	credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
 	log_history_path = "temp/log_history.txt" if not test else "temp/test_log_history.txt"
 
-	current_date = timestamp()
+	current_date, current_time_iso = timestamp()
 	url = f"https://api2.myhours.com/api/Logs?date={current_date}&step=100"
 
 	with open(credentials_path, "r") as file:
@@ -46,6 +46,19 @@ def requestlog(test=False):
 
 	return response
 
+
+def pseutime(test=False):
+	# Paths
+	log_path = "temp/log_time.txt" if not test else "temp/test_log_time.txt"
+
+	current_date, current_time_iso = timestamp()
+	with open(log_path, "r") as file:
+		log_time = file.read()
+	current_time_iso = datetime.strptime(current_time_iso, "%Y-%m-%dT%H:%M:%S.%f%z")
+	log_time = datetime.strptime(log_time, "%Y-%m-%dT%H:%M:%S.%f%z")
+	return str(current_time_iso - log_time)
+
+
 def main(test=False):
 	current_date = timestamp()
 	maxatmp = 3
@@ -57,7 +70,7 @@ def main(test=False):
 				return f'No logs recorded for {current_date}\n'
 			else:
 				for dictionary in response:
-					print(f"{repr(userLogs(dictionary))}\n")
+					print(f"{str(userLogs(dictionary))}\n")
 				print()
 			break
 		except json.decoder.JSONDecodeError as e:
@@ -72,8 +85,7 @@ def main(test=False):
 
 
 if __name__ == '__main__':
-    #  main(test=True)
-	request = requestlog(test=True)
-	print(type(request))
-	print(f"request = {request}")
+    # main(test=True)
+	# request = requestlog(test=True)
+	print(pseutime(test=True))
 	# print(timestamp())
