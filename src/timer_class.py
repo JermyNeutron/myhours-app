@@ -7,8 +7,10 @@ class sessionCurrent:
         self.task_name = json_data.get("taskName", None)
         self.log_id = json_data.get("id", None)
 
+
     def __str__(self) -> str:
         return f"log_id = {self.log_id},\nproject_name = {self.project_name},\ntask_name = {self.task_name},\nnote = {self.note.strip()}\n"
+
 
 class userProjects:
     def __init__(self, json_data = None) -> None:
@@ -41,11 +43,14 @@ class userProjects:
         self.id = json_data.get("id", None)
         self.data = json_data
 
+
     def __str__(self) -> str:
         return f"name = {self.name},\ntime logged = {self.totalTimeLogged},\nid = {self.id}\n"
 
+
     def __repr__(self) -> str:
         return 
+
 
 class userLogs:
     def __init__(self, json_data=None) -> None:
@@ -88,11 +93,14 @@ class userLogs:
         self.id = json_data.get("id", None)
         self.data = json_data
 
+
     def __str__(self) -> str:
         return f"log_id = {self.id},\nactive: {self.running},\nproject_name = {self.projectName},\ntask_name = {self.taskName},\nnote = {self.note.strip()}\n"
 
+
     def __repr__(self) -> str:
         return f"{self.data}"
+
 
 if __name__ == '__main__':
     dothething = userLogs()
