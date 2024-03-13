@@ -17,13 +17,13 @@ def rtrvproj(test=False):
 
 	with open(credentials_path, 'r') as file:
 		json_data = file.read()
-	data_proj = json.loads(json_data)
+	cred_data = json.loads(json_data)
 
 	payload={}
 	headers = {
 	'Accept': 'application/json',
 	'api-version': '1.0',
-	'Authorization': f'Bearer {data_proj["accessToken"]}'
+	'Authorization': f'Bearer {cred_data["accessToken"]}'
 	}
 	url = "https://api2.myhours.com/api/Projects/getAll"
 
@@ -54,8 +54,8 @@ def display_list(test=False):
 		print(userProjects(proj).name, end=', ')
 	print('')
 
+	# returns user projects
 	return sorted_resp
-	# updates projects.txt and reads user projects
 
 
 def main_rtrvproj(test=False):
@@ -94,6 +94,42 @@ def main_displist(test=False):
 		print('Max attempts reached while retrieving projects.')
 	return proj_list
 
+
+def genproj(test=False):
+	# Paths
+	credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
+
+	with open(credentials_path, "r") as file:
+		cred_data = json.loads(file.read())
+
+	url = "https://api2.myhours.com/api/Projects"
+
+	# input project name
+	new_projname = input("New project name: ")
+	
+	# check with project return to make sure project does not already exist
+
+	payload = json.dumps({
+	"name": f"{new_projname}",
+	# "clientId": None,
+	# "invoiceMethod": 2,
+	# "notes": "Project description",
+	# "approved": False,
+	# "customId": "xyz-0392432",
+	# "rate": 100
+	})
+	headers = {
+	'Content-Type': 'application/json',
+	'Authorization': f"Bearer {cred_data['accessToken']}"
+	}
+
+	pre_response = requests.request("POST", url, headers=headers, data=payload)
+	response = pre_response.json()
+	
+	return response
+
+
 if __name__ == '__main__':
-	# main_rtrvproj(test=True)
+	main_rtrvproj(test=True)
 	main_displist(test=True)
+	genproj(test=True)
