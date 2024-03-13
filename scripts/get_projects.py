@@ -58,7 +58,7 @@ def display_list(test=False):
 	# updates projects.txt and reads user projects
 
 
-def main(test=False):
+def main_rtrvproj(test=False):
 	maxatmp = 3
 	exatmp = 0
 	while exatmp < maxatmp:
@@ -76,6 +76,24 @@ def main(test=False):
 		print('Max attempts reached while retrieving projects.')
 
 
+def main_displist(test=False):
+	maxatmp = 3
+	exatmp = 0
+	while exatmp < maxatmp:
+		try:
+			proj_list = display_list(test)
+			return proj_list
+		except json.decoder.JSONDecodeError as e:
+			authenticate.main(test)
+			exatmp += 1
+			print("Credentials refreshed.")
+		except Exception as e:
+			print(f"An error occurred while retrieving projects: {e}")
+			break
+	else:
+		print('Max attempts reached while retrieving projects.')
+	return proj_list
+
 if __name__ == '__main__':
-	main(test=True)
-	display_list(test=True)
+	# main_rtrvproj(test=True)
+	main_displist(test=True)
