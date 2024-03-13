@@ -17,7 +17,6 @@ def timestamp():
     pst = pytz.timezone('America/Los_Angeles')
     current_time_pst = current_time_utc.astimezone(pst)
     current_time_iso = current_time_pst.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + 'Z'
-    # print(f"timestamp func returns: {current_time_iso}") # OPTIONAL
     return current_time_iso
 
 
@@ -29,7 +28,6 @@ def r_credentials(test=False):
     with open(credentials_path, "r") as file:
         json_data = file.read()
     accessed_credentials = json.loads(json_data)
-    # print(f"r_credentials() return: {accessed_credentials}") # OPTIONAL
     return accessed_credentials
 
 
@@ -47,6 +45,7 @@ def r_projects(test=False):
 def main(test=False, projectId=None, taskId=None):
     # Paths
     log_path = "temp/log_current.txt" if not test else "temp/test_log_current.txt"
+    time_path = "temp/log_time.txt" if not test else "temp/test_log_time.txt"
 
     current_time = timestamp()
     credentials = r_credentials(test)
@@ -77,18 +76,20 @@ def main(test=False, projectId=None, taskId=None):
     # convert request into type(dict)
     response = pre_response.json()
     cl_response = sessionCurrent(response)
-    # print(response)
-
-    print(cl_response) # OPTIONAL
+    if test:
+        print(cl_response)
 
     # UPDATE file path
     with open(log_path, 'w') as file:
         js_response = json.dumps(response)
         file.write(js_response)
-
+        
+		
+    with open(time_path, 'w') as file:
+        file.write(current_time)
+	
     return current_time
-
-
+    
 if __name__ == '__main__':
     # OPTIONAL START duration timer
     time_clock_start = time.time()
