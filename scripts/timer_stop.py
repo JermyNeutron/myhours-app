@@ -1,6 +1,6 @@
+from datetime import datetime
 import json
 import sys
-from datetime import datetime
 
 import pytz
 import requests
