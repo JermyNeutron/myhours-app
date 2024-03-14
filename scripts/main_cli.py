@@ -22,10 +22,6 @@ def clear_screen():
         _ = os.system('cls')
 
 
-def pseutime():
-	pass
-
-
 # @timelap
 def log_check(test=False):
     log = recentlogs.requestlog(test)
@@ -53,21 +49,36 @@ def timer_start_options(test=False):
     while True:
         proj_list = get_projects.main_displist(test)
 
-        usel_sub = input('\nHit <Enter> to start a blank timer\n\nType in your project: ')
+        usel_sub = input("""\nEnter) to start a blank timer
+    2) to create a new project
+    Q) to return\n\nType in your project: """)
 
-        if usel_sub == '':
+        if usel_sub.lower() == 'q':
+            usel_sub = None
+            return False
+        elif usel_sub == '':
             usel_sub = None
             projectId = None
+            return projectId
 
         if usel_sub is not None:
-            for proj in proj_list:
-                if proj["name"] == usel_sub:
-                    projectId = proj["id"]
-                    print(f'Timer started for {usel_sub}')
-                    return projectId
-            else:
-                print("Invalid selection.")
-        return projectId
+            maxatmp = 1
+            atmp = 0
+            while atmp < maxatmp:
+                for proj in proj_list:
+                    if proj["name"] == usel_sub:
+                        projectId = proj["id"]
+                        print(f'Timer started for {usel_sub}')
+                        return projectId
+                else:
+                    clear_screen()
+                    print(f"\"{usel_sub}\" is an invalid selection.\n\n")
+                    atmp += 1
+            
+
+
+def new_proj(test=False):
+    pass
 
 
 def main_screen(test=False):
@@ -79,7 +90,7 @@ def main_screen(test=False):
         welcome_statement = timer_statement(log_check(test))
         print("MyHours App")
         if log_check(test):
-             print(pseutime(log_check))
+            print(recentlogs.pseutime(test))
         print(welcome_statement)
         print(menu_strings.main(test))
         usel = input(': ')
@@ -90,16 +101,20 @@ def main_screen(test=False):
         elif usel.lower() == 'test' or usel.lower() == 'break':
             break
         elif usel == '1':
-            projectId = timer_start_options(test)
-            current_time = timer_start.main(test, projectId)
-            timer_status = True
-            print(timer_status)
-            time.sleep(2)
+            while True:
+                projectId = timer_start_options(test)
+                if projectId is not False:
+                    timer_start.main(test, projectId)
+                else:
+                    break
+                time.sleep(2)
+            else:
+                pass
         elif usel == '2':
-            timer_stop.main(test)
-            timer_status = False
-            time.sleep(4)
-            clear_screen()
+            if log_check(test):
+                timer_stop.main(test)
+                time.sleep(4)
+                clear_screen()
         elif usel == '3':
             while True:
                 clear_screen()
@@ -108,7 +123,10 @@ def main_screen(test=False):
                 break
         # refresh time
         elif usel == '9':
-            continue
+            pass
+        else:
+            pass
+        
         
 if __name__ == '__main__':
     main_screen(test=True)
