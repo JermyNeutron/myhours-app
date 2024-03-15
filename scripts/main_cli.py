@@ -49,9 +49,9 @@ def timer_start_options(test=False):
     while True:
         proj_list = get_projects.main_displist(test)
 
-        usel_sub = input("""\nEnter) to start a blank timer
-    2) to create a new project
-    Q) to return\n\nType in your project: """)
+        usel_sub = input("""\nEnter) Start Empty Timer
+    2) Create New Project
+    Q) Go Back\n\nType in your project: """)
 
         if usel_sub.lower() == 'q':
             usel_sub = None
@@ -60,25 +60,26 @@ def timer_start_options(test=False):
             usel_sub = None
             projectId = None
             return projectId
-
-        if usel_sub is not None:
+        elif usel_sub == '2':
+            clear_screen()
+            get_projects.genproj(test)
+            get_projects.main_rtrvproj(test)
+            clear_screen()
+            time.sleep(2)
+        else: # usel_sub is not None:
             maxatmp = 1
             atmp = 0
             while atmp < maxatmp:
                 for proj in proj_list:
                     if proj["name"] == usel_sub:
                         projectId = proj["id"]
+                        print(proj["id"])
                         print(f'Timer started for {usel_sub}')
                         return projectId
                 else:
                     clear_screen()
                     print(f"\"{usel_sub}\" is an invalid selection.\n\n")
                     atmp += 1
-            
-
-
-def new_proj(test=False):
-    pass
 
 
 def main_screen(test=False):
@@ -105,11 +106,11 @@ def main_screen(test=False):
                 projectId = timer_start_options(test)
                 if projectId is not False:
                     timer_start.main(test, projectId)
-                else:
+                    time.sleep(2)
                     break
-                time.sleep(2)
-            else:
-                pass
+                else:
+                    time.sleep(2)
+                    break
         elif usel == '2':
             if log_check(test):
                 timer_stop.main(test)
