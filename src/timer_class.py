@@ -95,7 +95,7 @@ class userLogs:
 
 
     def __str__(self) -> str:
-        return f"log_id = {self.id},\nactive: {self.running},\nproject_name = {self.projectName},\ntask_name = {self.taskName},\nnote = {self.note.strip()}\n"
+        return f"log_id = {self.id},\nactive: {self.running},\nproject_name = {self.projectName},\ntask_name = {self.taskName},\nnote = {(str(self.note))}\n"
 
 
     def __repr__(self) -> str:
