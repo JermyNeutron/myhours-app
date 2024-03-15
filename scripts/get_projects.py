@@ -104,32 +104,42 @@ def genproj(test=False):
 
 	url = "https://api2.myhours.com/api/Projects"
 
-	# input project name
-	new_projname = input("New project name: ")
-	
-	# check with project return to make sure project does not already exist
+	while True:
+		# input project name
+		new_projname = input("Q) Go Back\n\nEnter new project name: ")
+		if new_projname.lower() == 'q':
+			break
 
-	payload = json.dumps({
-	"name": f"{new_projname}",
-	# "clientId": None,
-	# "invoiceMethod": 2,
-	# "notes": "Project description",
-	# "approved": False,
-	# "customId": "xyz-0392432",
-	# "rate": 100
-	})
-	headers = {
-	'Content-Type': 'application/json',
-	'Authorization': f"Bearer {cred_data['accessToken']}"
-	}
 
-	pre_response = requests.request("POST", url, headers=headers, data=payload)
-	response = pre_response.json()
-	
-	return response
+		payload = json.dumps({
+		"name": f"{new_projname}",
+		# "clientId": None,
+		# "invoiceMethod": 2,
+		# "notes": "Project description",
+		# "approved": False,
+		# "customId": "xyz-0392432",
+		# "rate": 100
+		})
+		headers = {
+		'Content-Type': 'application/json',
+		'Authorization': f"Bearer {cred_data['accessToken']}"
+		}
+
+		pre_response = requests.request("POST", url, headers=headers, data=payload)
+		response = pre_response.json()
+		
+		return response
 
 
 if __name__ == '__main__':
-	main_rtrvproj(test=True)
-	main_displist(test=True)
-	genproj(test=True)
+	test = True
+	while True:
+		choice = input(f"1) main_rtrvproj()\n2) main_displist()\n3) genproj()\n\n: ")
+		if choice == '1':
+			main_rtrvproj(test=True)
+		elif choice == '2':
+			main_displist(test=True)
+		elif choice == '3':
+			print(genproj(test=True))
+		else:
+			print(f'invalid selection: {choice}')
