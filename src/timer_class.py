@@ -9,7 +9,7 @@ class sessionCurrent:
 
 
     def __str__(self) -> str:
-        return f"log_id = {self.log_id},\nproject_name = {self.project_name},\ntask_name = {self.task_name},\nnote = {self.note.strip()}\n"
+        return f"log_id = {self.log_id},\nproject_name = {self.project_name},\ntask_name = {self.task_name},\nnote = {str(self.note)}\n"
 
 
 class userProjects:
