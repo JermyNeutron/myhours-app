@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import datetime as dt_time
+import datetime
 import json
 import sys
 import time
@@ -13,11 +14,12 @@ from src.timer_class import sessionCurrent
 
 # retrieve current local time in ISO 8601 format
 def timestamp():
-    current_time_utc = datetime.utcnow().replace(tzinfo=pytz.utc)
+    current_time_utc = datetime.datetime.now(datetime.timezone.utc)
     pst = pytz.timezone('America/Los_Angeles')
     current_time_pst = current_time_utc.astimezone(pst)
     current_time_iso = current_time_pst.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + 'Z'
-    return current_time_iso
+    current_date = current_time_iso[:10]
+    return current_date, current_time_iso
 
 
 # ACCESS user credentials
@@ -47,7 +49,7 @@ def main(test=False, projectId=None, taskId=None):
     log_path = "temp/log_current.txt" if not test else "temp/test_log_current.txt"
     time_path = "temp/log_time.txt" if not test else "temp/test_log_time.txt"
 
-    current_time = timestamp()
+    current_date, current_time = timestamp()
     credentials = r_credentials(test)
 
     url = "https://api2.myhours.com/api/Logs/startNewLog"
@@ -57,7 +59,7 @@ def main(test=False, projectId=None, taskId=None):
             "projectId": projectId,
             "taskId": taskId,
             "note": "Started via API",
-            "date": f"{current_time}",
+            "date": f"{current_date}",
             "start": f"{current_time}",
             "billable": False,
             "expense": 0,
@@ -90,6 +92,7 @@ def main(test=False, projectId=None, taskId=None):
 	
     return current_time
     
+
 if __name__ == '__main__':
     # OPTIONAL START duration timer
     time_clock_start = time.time()
@@ -101,7 +104,7 @@ if __name__ == '__main__':
     time_clock_stop = time.time()
     clock_duration = time_clock_stop - time_clock_start
     # OPTIONAL convert iso to military HHMM
-    dt_obj = datetime.fromisoformat(current_time[:-1])
+    dt_obj = dt_time.fromisoformat(current_time[:-1])
     hour = dt_obj.hour
     minute = dt_obj.minute
 
