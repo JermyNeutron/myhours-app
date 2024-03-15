@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+from datetime import datetime as dt_time
+import datetime
 import pytz
 import json
 import sys
@@ -12,7 +13,7 @@ from src.timer_class import sessionCurrent, userProjects, userLogs
 import authenticate
 
 def timestamp():
-    current_time_utc = datetime.utcnow().replace(tzinfo=pytz.utc)
+    current_time_utc = datetime.datetime.now(datetime.timezone.utc)
     pst = pytz.timezone('America/Los_Angeles')
     current_time_pst = current_time_utc.astimezone(pst)
     current_time_iso = current_time_pst.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + 'Z'
@@ -54,20 +55,20 @@ def pseutime(test=False):
 	current_date, current_time_iso = timestamp()
 	with open(log_path, "r") as file:
 		log_time = file.read()
-	current_time_iso = datetime.strptime(current_time_iso, "%Y-%m-%dT%H:%M:%S.%f%z")
-	log_time = datetime.strptime(log_time, "%Y-%m-%dT%H:%M:%S.%f%z")
+	current_time_iso = dt_time.strptime(current_time_iso, "%Y-%m-%dT%H:%M:%S.%f%z")
+	log_time = dt_time.strptime(log_time, "%Y-%m-%dT%H:%M:%S.%f%z")
 	return str(current_time_iso - log_time)
 
 
 def main(test=False):
-	current_date = timestamp()
+	current_date, current_time_iso = timestamp()
 	maxatmp = 3
 	exatmp = 0
 	while exatmp < maxatmp:
 		try:
 			response = requestlog(test)
 			if response == []:
-				return f'No logs recorded for {current_date}\n'
+				print(f'No logs recorded for {current_date}\n')
 			else:
 				for dictionary in response:
 					print(f"{str(userLogs(dictionary))}\n")
@@ -85,7 +86,19 @@ def main(test=False):
 
 
 if __name__ == '__main__':
-    # main(test=True)
-	# request = requestlog(test=True)
-	print(pseutime(test=True))
-	# print(timestamp())
+	while True:
+		choice = input("select a test:\n1) main\n2) requestlog\n3) pseutime\n4) timestamp\n\n: ")
+		if choice == '1':
+			main(test=True)
+			break
+		elif choice == '2':
+			requestlog(test=True)
+			break
+		elif choice == '3':	
+			print(pseutime(test=True))
+			break
+		elif choice == '4':	
+			print(timestamp())
+			break
+		else:
+			print('Invalid test choice')
