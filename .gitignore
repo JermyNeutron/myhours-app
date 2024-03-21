@@ -1,6 +1,8 @@
 __pycache__/
 scratch/
 venv/
+main_cli.build/
+main_cli.dist/
 
 .DS_Store
 test_config.ini
