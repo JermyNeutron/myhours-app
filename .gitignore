@@ -5,6 +5,7 @@ main_cli.build/
 main_cli.dist/
 
 .DS_Store
+main_proxy.py
 test_config.ini
 test_credentials.txt
 test_log_current.txt
