@@ -130,4 +130,4 @@ def main_screen(test=False):
         
         
 if __name__ == '__main__':
-    main_screen(test=True)
+    main_screen(False)
