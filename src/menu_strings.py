@@ -7,7 +7,6 @@ def main(test=False):
 9) Refresh
 
 Q) Save and Close
-
 """
     menu_testing = """Type an option:
 1) Start Timer
@@ -18,7 +17,6 @@ Q) Save and Close
 
 Test) Clean Exit
 Q) Save and Close
-
 """
     menu_live_active = """"""
     menu_testing_active = """"""
@@ -27,3 +25,4 @@ Q) Save and Close
 
 if __name__ == '__main__':
     print(main(test=True))
+    input()
