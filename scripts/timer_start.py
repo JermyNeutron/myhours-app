@@ -10,16 +10,7 @@ import requests
 sys.path.append('.')
 
 from src.timer_class import sessionCurrent
-
-
-# retrieve current local time in ISO 8601 format
-def timestamp():
-    current_time_utc = datetime.datetime.now(datetime.timezone.utc)
-    pst = pytz.timezone('America/Los_Angeles')
-    current_time_pst = current_time_utc.astimezone(pst)
-    current_time_iso = current_time_pst.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + 'Z'
-    current_date = current_time_iso[:10]
-    return current_date, current_time_iso
+import timestamp
 
 
 # ACCESS user credentials
@@ -49,7 +40,7 @@ def main(test=False, projectId=None, taskId=None):
     log_path = "temp/log_current.txt" if not test else "temp/test_log_current.txt"
     time_path = "temp/log_time.txt" if not test else "temp/test_log_time.txt"
 
-    current_date, current_time = timestamp()
+    current_date, current_time = timestamp.main()
     credentials = r_credentials(test)
 
     url = "https://api2.myhours.com/api/Logs/startNewLog"
