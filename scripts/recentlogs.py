@@ -11,14 +11,8 @@ sys.path.append('.')
 from src.timer_class import sessionCurrent, userProjects, userLogs
 
 import authenticate
-
-def timestamp():
-    current_time_utc = datetime.datetime.now(datetime.timezone.utc)
-    pst = pytz.timezone('America/Los_Angeles')
-    current_time_pst = current_time_utc.astimezone(pst)
-    current_time_iso = current_time_pst.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + 'Z'
-    current_date = current_time_iso[:10]
-    return current_date, current_time_iso
+import timestamp
+import editlog
 
 
 def requestlog(test=False):
@@ -26,7 +20,7 @@ def requestlog(test=False):
 	credentials_path = "temp/credentials.txt" if not test else "temp/test_credentials.txt"
 	log_history_path = "temp/log_history.txt" if not test else "temp/test_log_history.txt"
 
-	current_date, current_time_iso = timestamp()
+	current_date, current_time_iso = timestamp.main()
 	url = f"https://api2.myhours.com/api/Logs?date={current_date}&step=100"
 
 	with open(credentials_path, "r") as file:
@@ -52,7 +46,7 @@ def pseutime(test=False):
 	# Paths
 	log_path = "temp/log_time.txt" if not test else "temp/test_log_time.txt"
 
-	current_date, current_time_iso = timestamp()
+	current_date, current_time_iso = timestamp.main()
 	with open(log_path, "r") as file:
 		log_time = file.read()
 	current_time_iso = dt_time.strptime(current_time_iso, "%Y-%m-%dT%H:%M:%S.%f%z")
@@ -61,7 +55,7 @@ def pseutime(test=False):
 
 
 def main(test=False):
-	current_date, current_time_iso = timestamp()
+	current_date, current_time_iso = timestamp.main()
 	maxatmp = 3
 	exatmp = 0
 	while exatmp < maxatmp:
@@ -70,9 +64,14 @@ def main(test=False):
 			if response == []:
 				print(f'No logs recorded for {current_date}\n')
 			else:
-				for dictionary in response:
+				for index, dictionary in enumerate(response):
+					print(f"{index+1}. ", end="")
 					print(f"{str(userLogs(dictionary))}\n")
-				print()
+				choice = input("Type E to EDIT: ")
+				if choice.lower() != "e":
+					pass
+				else:
+					editlog.main(test)
 			break
 		except json.decoder.JSONDecodeError as e:
 			authenticate.main(test)
@@ -98,7 +97,9 @@ if __name__ == '__main__':
 			print(pseutime(test=True))
 			break
 		elif choice == '4':	
-			print(timestamp())
+			print(timestamp.main())
+			break
+		elif choice.lower() == 'q':
 			break
 		else:
 			print('Invalid test choice')
