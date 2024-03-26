@@ -9,6 +9,7 @@ from src.timelap import timelap
 from src import menu_strings
 
 import authenticate
+import cls_screen
 import get_projects
 import timer_start
 import timer_stop
@@ -45,7 +46,8 @@ def timer_statement(status):
 
 
 def timer_start_options(test=False):
-    clear_screen()
+    # clear_screen()
+    cls_screen.screen()
     while True:
         proj_list = get_projects.main_displist(test)
 
@@ -61,10 +63,12 @@ def timer_start_options(test=False):
             projectId = None
             return projectId
         elif usel_sub == '2':
-            clear_screen()
+            cls_screen.screen()
+            # clear_screen()
             get_projects.genproj(test)
             get_projects.main_rtrvproj(test)
-            clear_screen()
+            # clear_screen()
+            cls_screen.screen()
             time.sleep(2)
         else: # usel_sub is not None:
             maxatmp = 1
@@ -77,7 +81,8 @@ def timer_start_options(test=False):
                         print(f'Timer started for {usel_sub}')
                         return projectId
                 else:
-                    clear_screen()
+                    # clear_screen()
+                    cls_screen.screen()
                     print(f"\"{usel_sub}\" is an invalid selection.\n\n")
                     atmp += 1
 
@@ -87,7 +92,8 @@ def main_screen(test=False):
     get_projects.main_rtrvproj(test)
     # initialize timer status
     while True:
-        clear_screen()
+        # clear_screen()
+        cls_screen.screen()
         welcome_statement = timer_statement(log_check(test))
         print("MyHours App")
         if log_check(test):
@@ -101,6 +107,8 @@ def main_screen(test=False):
             break
         elif usel.lower() == 'test' or usel.lower() == 'break':
             break
+
+        #1: Start Timer
         elif usel == '1':
             while True:
                 projectId = timer_start_options(test)
@@ -111,16 +119,21 @@ def main_screen(test=False):
                 else:
                     time.sleep(2)
                     break
+
+        #2 Stop Timer
         elif usel == '2':
             if log_check(test):
                 timer_stop.main(test)
                 time.sleep(4)
-                clear_screen()
+                # clear_screen()
+                cls_screen.screen()
+
+        #3 Retrieve Recent Logs
         elif usel == '3':
             while True:
-                clear_screen()
+                # clear_screen()
+                cls_screen.screen()
                 recentlogs.main(test)
-                input("Press any key to return to menu: ")
                 break
         # refresh time
         elif usel == '9':
