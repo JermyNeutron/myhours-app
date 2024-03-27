@@ -10,7 +10,6 @@ import requests
 
 # check config population
 def config_check(test=False):
-
     # Paths
     config_path = "config/config.ini" if not test else "config/test_config.ini"
 
