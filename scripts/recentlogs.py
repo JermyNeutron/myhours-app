@@ -1,4 +1,5 @@
 from datetime import datetime as dt_time
+from time import sleep
 import datetime
 import pytz
 import json
@@ -62,7 +63,8 @@ def main(test=False):
 		try:
 			response = requestlog(test)
 			if response == []:
-				print(f'No logs recorded for {current_date}\n')
+				print(f'No logs recorded for today, {current_date}\n')
+				input("Press any key to return: ")
 			else:
 				for index, dictionary in enumerate(response):
 					print(f"{index+1}. ", end="")
