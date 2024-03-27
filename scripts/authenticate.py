@@ -111,6 +111,7 @@ def main(test=False):
             else:
                 writing_response(response, test)
                 if test:
+                    print(response)
                     checking_response(test)  # OPTIONAL
         except requests.exceptions.ConnectionError as e:
             print(f'\nERROR: Internet connection failed. Try again once connected.\n')
