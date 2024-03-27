@@ -20,13 +20,16 @@ def api_edit(id, note, test=False):
 
     payload = json.dumps({
         "id": id,
-        "note": note,
+        "userId": 956662,
+        "note": f"{note}",
     })
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': f'Bearer {cred_data["accessToken"]}'
+        'Authorization': f'Bearer {cred_data["accessToken"]}',
     }
     response = requests.request("PUT", url, headers=headers, data=payload)
+    print(response.text)
+    sleep(3)
 
 
 def rel_hist(test=False):
@@ -77,9 +80,12 @@ def main(test=False):
                                 # API edit
                                 elif finnote.lower() != "q":
                                     try:
-                                        api_edit(selchoice["id"], modnote, test)
+                                        api_edit(selchoice['id'], modnote, test)
                                     except requests.exceptions.ConnectionError as e:
                                         print("\nInternet connection lost.\nPlease try again later.")
+                                        sleep(3)
+                                    except Exception as e:
+                                        print(e)
                                         sleep(3)
                                 else:
                                     break
