@@ -64,12 +64,12 @@ def main(test=False):
 			response = requestlog(test)
 			if response == []:
 				print(f'No logs recorded for today, {current_date}\n')
-				input("Press any key to return: ")
+				input("Press any key to return\n\n: ")
 			else:
 				for index, dictionary in enumerate(response):
 					print(f"{index+1}. ", end="")
 					print(f"{str(userLogs(dictionary))}\n")
-				choice = input("Type E to EDIT: ")
+				choice = input("E) Edit\nQ) Go Back\n\n: ")
 				if choice.lower() != "e":
 					pass
 				else:
