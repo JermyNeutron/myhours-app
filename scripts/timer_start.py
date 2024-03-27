@@ -77,7 +77,6 @@ def main(test=False, projectId=None, taskId=None):
         js_response = json.dumps(response)
         file.write(js_response)
         
-		
     with open(time_path, 'w') as file:
         file.write(current_time)
 	
