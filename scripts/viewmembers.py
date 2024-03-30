@@ -16,11 +16,14 @@ def main(test=False):
     'Authorization': f"Bearer {credentials['accessToken']}"
     }
 
-    response = requests.request("GET", url, headers=headers, data=payload)
+    response = requests.request("GET", url, headers=headers, data=payload).json()
 
     if test:
-        print(response.text)
-    return(response.text)
+        print(response)
+        filepath = "temp/test_viewmember.txt"
+        with open(filepath, "w") as file:
+            json.dump(response, file)
+    return(response)
 
 
 if __name__ == '__main__':
