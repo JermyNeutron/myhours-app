@@ -3,6 +3,7 @@ scratch/
 venv/
 main_cli.build/
 main_cli.dist/
+personal_version/
 
 .DS_Store
 main_proxy.py
