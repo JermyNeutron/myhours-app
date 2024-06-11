@@ -12,6 +12,7 @@ test_log_current.txt
 test_log_time.txt
 test_log_history.txt
 test_projects.txt
+test_viewmember.txt
 working_authentication.py
 working_scratch1.py
 myhours-app.code-workspace
